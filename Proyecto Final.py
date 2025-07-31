@@ -195,12 +195,80 @@ ORDEN SUGERIDO POR CHAT GPT:
         En otro caso: mensaje de error “Opción inválida”.
 '''
 
-def cargar_combinacion():
+def cargar_combinacion(combinacion_secreta):
+    archivo = open("combinacion_secreta.txt")
+    print(archivo.read())
 
+#versión 2:
 
+def cargar_combinacion(codigo):
+    """
+    Lee la combinación secreta desde un archivo de texto.
+    Parámetros:
+      ruta (str): ruta al archivo .txt con 4 dígitos separados por espacios.
+    Retorna:
+      list[int]: lista de 4 enteros (0–9).
+    Termina el programa si el archivo no existe o no es válido.
+    """
+    try:
+        contenido = open('codigo.txt', 'r').read().strip().split()
+    except FileNotFoundError:
+        print(f"ERROR: No se encontró el archivo '{codigo}'.")
+        exit(1)
+    if len(contenido) != 4:
+        print("ERROR: Deben ser exactamente 4 números en el archivo.")
+        exit(1)
+    try:
+        nums = [int(x) for x in contenido]
+    except ValueError:
+        print("ERROR: El archivo debe contener solo dígitos (0–9).")
+        exit(1)
+    if any(n < 0 or n > 9 for n in nums):
+        print("ERROR: Cada número debe estar entre 0 y 9.")
+        exit(1)
+    return nums
+print(cargar_combinacion)
+    
+
+'''
 def crear_tablero():
 
 
+def imprimir_tablero(tablero):
+
+
+def leer_intento(nombre_jugador):
+
+
+def validar_intento(intento_str, historial):
+
+
+def calculo_resultado(intento_list, combinacion_secreta):
+
+
+def registro_intento(tablero, fila_idx, intento_list, resultado):
+
+
+def actualizar_tablero(tablero):
+
+
+def es_victoria(resultado, contador_intentos):
+
+
+def fin_del_juego(combinacion_secreta, contador_intentos):
+
+
+def control_flujo(contador_intentos):
+
+
+def iniciar_juego():
+
+
+def volver_a_jugar():
+
+
+def menu_principal():
+'''
 
 
 
@@ -226,6 +294,7 @@ def crear_tablero():
 
 # MENÚ PRINCIPAL:
 
+'''
 print("Bienvenido a 'Los 4 Monazos'.\n")
 
 while True:
@@ -242,4 +311,4 @@ while True:
         exit()
     else:
         print("\nOpción inválida. Por favor, ingrese 1 para jugar o 2 para salir.\n")
-    
+'''
