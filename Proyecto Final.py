@@ -1,18 +1,7 @@
 '''
-    Esta función lo que hará, sera abrir, leer, 
+Esta función lo que hará, sera abrir, leer, 
 limpiar la cadena de strings de los espacios que tiene en el archivo, 
-y convertirlo en una lista.
-    Además, controlará y manejará errores que puedan darse en la lista,
-utilizando try y except, para que así el programa no se detenga.
-    Primero manejará un error muy común que podría darse,
-al relacionar un archivo de texto con un script en Pyrthon,
-el cual es, que el archivo no exista 
-o no se encuentreen el mismo directorio que el script de Python.
-    Y el segundo error, también común, es que los elementos dentro de la lista,
-no sean del tipo integer o números enteros,
-sino floats o strings.
-    En esta función también se establecen ciertos condicionales que la lista debe cumplir,
-tanto de extensión, como el rango en el cual debe encontrarse los integers en la lista.
+y convertirlo en una lista de integers.
 '''
 def cargar_combinacion(combinacion_secreta):
     '''
@@ -95,24 +84,60 @@ def cargar_combinacion(combinacion_secreta):
 # Va a devolver los valores al lugar donde se llamó a la función combinacion.
 # Al ser combinacion una lista, lo que va a hacer es devolver/entregar el contenido de la misma como el resultado de la función cargar_combinación
 
-print(cargar_combinacion("combinacion_secreta.txt"))
+cargar_combinacion("combinacion_secreta.txt")
 # Se llama a la función cargar_combinacion.
 # Se le da un argumento a dicha función, el nombre del archivo de texto.
 # Imprime el resultado de la función en la terminal.
 
-'''
-def crear_tablero():
+# Variables globales
+FILAS = 10
+COLUMNAS = 4
+VACIO = 0
 
+def crear_tablero():
+# Lista por comprensión anidada, que construye una matriz = lista de listas.
+# Lista de 11 filas cada una con 4 espacios vacíos 
+    return [[VACIO for _ in range (COLUMNAS)] for _ in range (FILAS)]
 
 def imprimir_tablero(tablero):
+    print("✓ = aciertos\n~ = coincidencias")
+    print("\n# Intento | Combinación Ingresada | ✓ | ~")
+    for combinacion_ingresada in tablero:
+        print(" |".join(combinacion_ingresada) + " | " ) #regresar a esto para completar, cuando hayamos definido los contadores de aciertos y combinaciones
+    print("#".join(str(numero_intento + 1) for numero_intento in range (FILAS)))
 
+def leer_intento():
+    intento = 0 # Contador
+    while intento < 11:
+        print(f"Intento número {intento} de 10.")
+        intento += 1
+        break
+    combinacion_del_usuario = input("Por favor ingrese su combinación numérica: ")
 
-def leer_intento(nombre_jugador):
+def es_intento_valido(combinacion_del_usuario, historial):
+    while True:
+        if len(combinacion_del_usuario) != 4:
+            print("ERROR: La combinación debe estar formada por 4 dígitos")
+            return None
+        if all('0' > digito > '9' for digito in combinacion_del_usuario):
+            print("ERROR: Los dígitos deben ser entre 0 - 9.")
+            return None
+        if combinacion_del_usuario in historial:
+            print("ERROR: Esta combinación ya fue jugada antes.")
+            return None
+        
+        historial.add(combinacion_del_usuario)
+        enteros_combinacion = [int(digito) for digito in combinacion_del_usuario]
 
+        # Añadir lista de enteros al tablero
+        tablero = crear_tablero() # genera la matriz vacía
+        indice_intento = len(historial) - 1 # historial ya tiene el nuevo intento
+        tablero[indice_intento] = enteros_combinacion # reemplaza la fila vacía por la lista de enteros
+        imprimir_tablero(tablero) # muestra el tablero con el nuevo intento
+               
+        return enteros_combinacion
 
-def validar_intento(intento_str, historial):
-
-
+'''
 def calculo_resultado(intento_list, combinacion_secreta):
 
 
